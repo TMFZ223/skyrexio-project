@@ -1,0 +1,33 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "ErrorAfterSendRequestWithInvalidData",
+  "type": "object",
+  "required": [
+    "success",
+    "status",
+    "data"
+  ],
+  "properties": {
+    "success": {
+      "type": "boolean"
+    },
+    "status": {
+      "type": "integer"
+    },
+    "data": {
+      "type": "object",
+      "required": [
+        "message",
+        "errorCode"
+      ],
+      "properties": {
+        "message": {
+          "type": "string"
+        },
+        "errorCode": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}
