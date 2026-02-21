@@ -1,5 +1,6 @@
-package user;
+package factories;
 
+import models.User;
 import utils.PropertyReader;
 
 public class UserFactory {

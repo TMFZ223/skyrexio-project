@@ -29,10 +29,17 @@ public class CorrectLoginValidator extends BaseValidator {
                 .body("data.accessToken", notNullValue());
     }
 
-    @Step("Убедиться, что после переключения языка код в ключе language изменился на {changeLanguageCode}")
-    public void checkChangeLanguageCode(Response responseBody, String changeLanguageCode) {
+    @Step("Убедиться, что код в ключе language содержит значение {LanguageCode}")
+    public void checkLanguageCode(Response responseBody, String LanguageCode) {
         responseBody.then()
                 .body("data", hasKey("language"))
-                .body("data.language", equalTo(changeLanguageCode));
+                .body("data.language", equalTo(LanguageCode));
+    }
+
+    @Step("Убедиться, что значение поля theme {expectedTheme}")
+    public void checkTheme(Response responseBody, String expectedTheme) {
+        responseBody.then()
+                .body("data", hasKey("theme"))
+                .body("data.theme", equalTo(expectedTheme));
     }
 }

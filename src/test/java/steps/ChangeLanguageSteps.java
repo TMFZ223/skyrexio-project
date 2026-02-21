@@ -2,7 +2,7 @@ package steps;
 
 import io.qameta.allure.Step;
 import io.restassured.response.Response;
-import language.ChangeLanguageRequestModel;
+import models.ChangeLanguageRequestModel;
 
 import static enums.Endpoints.CHANGELANGUAGE;
 

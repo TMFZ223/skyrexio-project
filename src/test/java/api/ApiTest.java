@@ -1,12 +1,14 @@
 package api;
 
 import io.restassured.response.Response;
-import language.ChangeLanguageRequestModel;
-import language.LanguageFactory;
+import models.ChangeLanguageRequestModel;
+import factories.LanguageFactory;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-import user.User;
-import user.UserFactory;
+import models.ChangeThemeRequestModel;
+import factories.ThemeFactory;
+import models.User;
+import factories.UserFactory;
 
 public class ApiTest extends BaseTest {
 
@@ -59,10 +61,10 @@ public class ApiTest extends BaseTest {
         String token = loginResponseBody.jsonPath().getString("data.accessToken");
         Response changeLanguageResponse = changeLanguageSteps.getChangeLanguageResponse(token, language);
         changeLanguageSteps.checkStatusCode(changeLanguageResponse, 201);
-        changeLanguageValidator.validateChangeLanguageSchema(changeLanguageResponse);
-        changeLanguageValidator.checkUpdateLanguageMessage(changeLanguageResponse, "Language updated");
+        changeUserSettingsValidator.validateChangeUserSettingsSchema(changeLanguageResponse);
+        changeUserSettingsValidator.checkMessage(changeLanguageResponse, "Language updated");
         Response loginResponseBodyAfterChangeLanguage = loginSteps.getLoginResponse(UserFactory.withValidCredentials());
-        correctLoginValidator.checkChangeLanguageCode(loginResponseBodyAfterChangeLanguage, language.getLanguage());
+        correctLoginValidator.checkLanguageCode(loginResponseBodyAfterChangeLanguage, language.getLanguage());
     }
 
     @Test(description = "Переключение на несуществующий в системе язык")
@@ -88,5 +90,66 @@ public class ApiTest extends BaseTest {
         changeLanguageSteps.checkStatusCode(changeLanguageResponse, 200);
         errorValidator.validateErrorJsonSchema(changeLanguageResponse);
         errorValidator.checkExpectedErrorMessage(changeLanguageResponse, errorMessage);
+    }
+
+    @DataProvider
+    public Object[][] themeData() {
+        return new Object[][]{
+                {ThemeFactory.swichToDark()},
+                {ThemeFactory.swichToLight()}};
+    }
+
+    @Test(description = "Смена темы", dataProvider = "themeData")
+    public void changeThemeTest(ChangeThemeRequestModel theme) {
+        Response loginResponseBody = loginSteps.getLoginResponse(UserFactory.withValidCredentials());
+        String token = loginResponseBody.jsonPath().getString("data.accessToken");
+        Response changeThemeResponse = changeThemeSteps.getChangeThemeResponse(token, theme);
+        changeThemeSteps.checkStatusCode(changeThemeResponse, 201);
+        changeUserSettingsValidator.validateChangeUserSettingsSchema(changeThemeResponse);
+        changeUserSettingsValidator.checkMessage(changeThemeResponse, "Theme updated");
+        Response loginResponseBodyAfterChangeTheme = loginSteps.getLoginResponse(UserFactory.withValidCredentials());
+        correctLoginValidator.checkTheme(loginResponseBodyAfterChangeTheme, theme.getTheme());
+    }
+
+    @DataProvider
+    public Object[][] pairLanguageThemeData() {
+        return new Object[][]{
+                {LanguageFactory.swichToEnglish(), ThemeFactory.swichToDark()},
+                {LanguageFactory.swichToEspanol(), ThemeFactory.swichToLight()},
+                {LanguageFactory.swichToFranch(), ThemeFactory.swichToDark()},
+                {LanguageFactory.swichToDeutsch(), ThemeFactory.swichToLight()},
+                {LanguageFactory.swichToRussian(), ThemeFactory.swichToDark()},
+                {LanguageFactory.swichToChinese(), ThemeFactory.swichToLight()},
+                {LanguageFactory.swichToJapanese(), ThemeFactory.swichToDark()},
+                {LanguageFactory.swichToKorean(), ThemeFactory.swichToLight()},
+                {LanguageFactory.swichToEspanol(), ThemeFactory.swichToDark()},
+                {LanguageFactory.swichToEnglish(), ThemeFactory.swichToLight()},
+                {LanguageFactory.swichToDeutsch(), ThemeFactory.swichToDark()},
+                {LanguageFactory.swichToFranch(), ThemeFactory.swichToLight()},
+                {LanguageFactory.swichToChinese(), ThemeFactory.swichToDark()},
+                {LanguageFactory.swichToRussian(), ThemeFactory.swichToLight()},
+                {LanguageFactory.swichToKorean(), ThemeFactory.swichToDark()},
+                {LanguageFactory.swichToJapanese(), ThemeFactory.swichToLight()}};
+    }
+
+    @Test(description = "Попарное тестирование смены языка и темы", dataProvider = "pairLanguageThemeData")
+    public void pairChangeLanguageThemeTest(ChangeLanguageRequestModel language, ChangeThemeRequestModel theme) {
+        Response loginResponseBody = loginSteps.getLoginResponse(UserFactory.withValidCredentials());
+        String token = loginResponseBody.jsonPath().getString("data.accessToken");
+        changeLanguageSteps.getChangeLanguageResponse(token, language);
+        changeThemeSteps.getChangeThemeResponse(token, theme);
+        Response loginResponseBodyAfterChangeSettings = loginSteps.getLoginResponse(UserFactory.withValidCredentials());
+        correctLoginValidator.checkTheme(loginResponseBodyAfterChangeSettings, theme.getTheme());
+        correctLoginValidator.checkLanguageCode(loginResponseBodyAfterChangeSettings, language.getLanguage());
+    }
+
+    @Test(description = "Переключение на несуществующую тему в системе")
+    public void changeUnknownThemeTest() {
+        Response loginResponseBody = loginSteps.getLoginResponse(UserFactory.withValidCredentials());
+        String token = loginResponseBody.jsonPath().getString("data.accessToken");
+        Response changeThemeResponse = changeThemeSteps.getChangeThemeResponse(token, ThemeFactory.swichToDim());
+        changeThemeSteps.checkStatusCode(changeThemeResponse, 200);
+        errorValidator.validateErrorJsonSchema(changeThemeResponse);
+        errorValidator.checkExpectedErrorMessage(changeThemeResponse, "theme must be one of the following values: light, dark");
     }
 }

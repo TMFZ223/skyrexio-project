@@ -7,6 +7,7 @@ import lombok.Getter;
 @Getter
 public enum Endpoints {
     LOGIN("/user/login"),
+    CHANGETHEME("user/changeTheme"),
     CHANGELANGUAGE("/user/changeLanguage");
     private final String path;
 }

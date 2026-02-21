@@ -1,5 +1,6 @@
-package language;
+package factories;
 
+import models.ChangeLanguageRequestModel;
 import utils.PropertyReader;
 
 import static enums.Languages.*;
