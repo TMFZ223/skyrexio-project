@@ -30,10 +30,10 @@ public class CorrectLoginValidator extends BaseValidator {
     }
 
     @Step("Убедиться, что код в ключе language содержит значение {LanguageCode}")
-    public void checkLanguageCode(Response responseBody, String LanguageCode) {
+    public void checkLanguageCode(Response responseBody, String languageCode) {
         responseBody.then()
                 .body("data", hasKey("language"))
-                .body("data.language", equalTo(LanguageCode));
+                .body("data.language", equalTo(languageCode));
     }
 
     @Step("Убедиться, что значение поля theme {expectedTheme}")
