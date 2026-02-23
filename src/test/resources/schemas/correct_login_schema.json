@@ -1,0 +1,65 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "AfterCorrectLoginResponse",
+  "type": "object",
+  "required": [
+    "success",
+    "status",
+    "data"
+  ],
+  "properties": {
+    "success": {
+      "type": "boolean"
+    },
+    "status": {
+      "type": "integer"
+    },
+    "data": {
+      "type": "object",
+      "required": [
+        "role",
+        "theme",
+        "language",
+        "accessToken",
+        "refreshToken",
+        "skyrexUserUuid",
+        "currentLastLoginDate",
+        "intercomHash",
+        "product",
+        "isDemoEnabled"
+      ],
+      "properties": {
+        "role": {
+          "type": "string"
+        },
+        "theme": {
+          "type": "string"
+        },
+        "language": {
+          "type": "string"
+        },
+        "accessToken": {
+          "type": "string"
+        },
+        "refreshToken": {
+          "type": "string"
+        },
+        "skyrexUserUuid": {
+          "type": "string"
+        },
+        "currentLastLoginDate": {
+          "type": "string"
+        },
+        "intercomHash": {
+          "type": "string"
+        },
+        "product": {
+          "type": "string"
+        },
+        "isDemoEnabled": {
+          "type": "boolean"
+        }
+      }
+    }
+  }
+}
