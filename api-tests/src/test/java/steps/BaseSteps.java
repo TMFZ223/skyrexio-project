@@ -6,7 +6,7 @@ import io.restassured.filter.log.LogDetail;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
-import utils.AllureRequestOnlyFilter;
+import filters.AllureRequestOnlyFilter;
 import utils.PropertyReader;
 
 import static io.restassured.RestAssured.*;

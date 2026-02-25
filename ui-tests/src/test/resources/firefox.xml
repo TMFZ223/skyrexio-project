@@ -1,0 +1,11 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="FirefoxSuite" parallel="tests" thread-count="2">
+    <test name="FirefoxTests">
+        <parameter name="webBrowser" value="firefox"/>
+        <classes>
+            <class name="tests.LoginTest"/>
+            <class name="tests.ProfileTest"/>
+            <class name="tests.TraidingTerminalTest"/>
+        </classes>
+    </test>
+</suite>
