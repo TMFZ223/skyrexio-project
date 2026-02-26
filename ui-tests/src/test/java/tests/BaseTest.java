@@ -9,6 +9,7 @@ import org.testng.annotations.Optional;
 import org.testng.annotations.Parameters;
 import pages.HomePage;
 import pages.LoginPage;
+import pages.TerminalTradingDiaryPage;
 import pages.TradingTerminalPage;
 
 import static com.codeborne.selenide.Configuration.browser;
@@ -22,6 +23,7 @@ abstract class BaseTest {
     LoginPage loginPage;
     HomePage homePage;
     TradingTerminalPage tradingTerminalPage;
+    TerminalTradingDiaryPage terminalTradingDiaryPage;
 
     @Parameters({"webBrowser"})
     @BeforeMethod
@@ -43,6 +45,7 @@ abstract class BaseTest {
         loginPage = new LoginPage();
         homePage = new HomePage();
         tradingTerminalPage = new TradingTerminalPage();
+        terminalTradingDiaryPage = new TerminalTradingDiaryPage();
     }
 
     @AfterMethod(alwaysRun = true)

@@ -11,6 +11,7 @@ public class HomePage {
     private final SelenideElement profile = $("svg.lucide-user-cog");
     private final SelenideElement terminalButton = $x("//li//button[text()='Терминал']");
     private final SelenideElement manualTradingTerminalLink = $("[href='/manual-trading/trading-terminal']");
+    private final SelenideElement terminalTradingDiaryLink = $("[href='/manual-trading/trading-diary']");
 
     @Step("Убедиться, что иконка профиля видна")
     public void checkVisibilityOfProfileIcon() {
@@ -33,5 +34,12 @@ public class HomePage {
     public TradingTerminalPage goToManualTradingTerminalPage() {
         manualTradingTerminalLink.click();
         return new TradingTerminalPage();
+    }
+
+    @Step("Перейти по ссылке торгового дневника терминалат")
+    public TerminalTradingDiaryPage goToTerminalTradingDiaryLink() {
+        terminalTradingDiaryLink.shouldBe(Condition.visible)
+                .click();
+        return new TerminalTradingDiaryPage();
     }
 }
