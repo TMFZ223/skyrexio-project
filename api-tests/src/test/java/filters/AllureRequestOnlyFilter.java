@@ -1,4 +1,4 @@
-package utils;
+package filters;
 
 import io.qameta.allure.Allure;
 import io.restassured.filter.Filter;

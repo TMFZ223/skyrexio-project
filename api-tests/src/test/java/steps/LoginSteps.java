@@ -2,7 +2,7 @@ package steps;
 
 import io.qameta.allure.Step;
 import io.restassured.response.Response;
-import models.User;
+import user.User;
 
 import static enums.Endpoints.LOGIN;
 

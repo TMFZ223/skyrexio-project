@@ -1,5 +1,6 @@
 package api;
 
+import io.qameta.allure.Epic;
 import io.restassured.response.Response;
 import models.ChangeLanguageRequestModel;
 import factories.LanguageFactory;
@@ -7,9 +8,10 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import models.ChangeThemeRequestModel;
 import factories.ThemeFactory;
-import models.User;
-import factories.UserFactory;
+import user.User;
+import user.UserFactory;
 
+@Epic("api tests")
 public class ApiTest extends BaseTest {
 
     @Test(description = "Позитивный тест на логин")
